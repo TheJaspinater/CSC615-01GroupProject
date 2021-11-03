@@ -24,15 +24,15 @@ int lineScan() {
     return left + (leftCenter * 2) + (rightCenter * 4) + (right * 8);
 }
 
-int lineScanHelper (int sensor) {
+int lineScanHelper (int sensor) { // Looks for Black lines 
     if (readPin(sensor) == 0)
         return 1;
     else
         return 0;
 }
 
-void initSServo() {
-    softPwmCreate(SSERVO, 90, 100);
+void initServo(int servo) {
+    softPwmCreate(servo, ANGLE90, 100);
 }
 
 void look(int servo, int angle) {

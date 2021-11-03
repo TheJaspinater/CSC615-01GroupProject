@@ -47,7 +47,7 @@
 
 // Functions
 double getDistanceCM  ();
-void   initSServo     ();
+void   initServo      ( int );
 void   look           ( int, int );
 void   stopServo      ( int );
 int    lineScan       ();

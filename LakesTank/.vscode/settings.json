@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "tank.h": "c",
+        "sensors.h": "c",
+        "gpiocontroller.h": "c",
+        "drivetrain.h": "c"
+    }
+}
