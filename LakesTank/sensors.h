@@ -3,7 +3,7 @@
 * Name:Lake Jasper
 * Student ID:920150605
 * Github ID:TheJaspinater
-* Project:  Assignment 2 - Tapeless Ruler
+* Project:
 *
 * File: sensors.h
 *

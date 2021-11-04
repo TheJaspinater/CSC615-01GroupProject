@@ -3,15 +3,11 @@
 * Name:Lake Jasper
 * Student ID:920150605
 * Github ID:TheJaspinater
-* Project:  Assignment 2 - Tapeless Ruler
+* Project:
 *
-* File: assignment2.c
+* File:softPwm.c
 *
-* Description: This file is reponsible for holding all of the
-* method definitions needed to make use of an echo sensor by
-* grabbing the time difference between the sensors high/low
-* state and further compute that value to acheive a distance
-* in cm. 
+* Description:
 **************************************************************/
 #include <stdio.h>
 #include <malloc.h>

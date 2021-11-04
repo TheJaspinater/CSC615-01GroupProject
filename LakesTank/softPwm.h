@@ -3,13 +3,11 @@
 * Name:Lake Jasper
 * Student ID:920150605
 * Github ID:TheJaspinater
-* Project:  Assignment 2 - Tapeless Ruler
+* Project:
 *
-* File: assignment2.h
+* File: softPwm.h
 *
-* Description: This file is reponsible for supporting
-* assignment.c with needed library inclusions, definitions, and
-* and method signitures.
+* Description:
 **************************************************************/
 #ifdef __cplusplus
 extern "C" {

@@ -3,9 +3,9 @@
 * Name:Lake Jasper
 * Student ID:920150605
 * Github ID:TheJaspinater
-* Project:  Assignment 3 - Motors & Motor Shield
+* Project:
 *
-* File: driveTrain.c
+* File: driveTrain.h
 *
 * Description:
 **************************************************************/
