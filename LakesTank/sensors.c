@@ -44,6 +44,16 @@ void stopServo(int servo) {
     softPwmStop(servo);
 }
 
+double averageDistCM(int measurements) {
+    double dist = 0;
+
+    for (int i = 0; i < measurements; i++) {
+        dist += getDistanceCM();
+    }
+
+    return dist/measurements;
+}
+
 double getDistanceCM(){
     setPin(ECHO, INPUT);
     setPin(TRIGGER, INPUT); // Confirm trigger is low before going high to ensure a clean sginal
@@ -58,7 +68,7 @@ double getDistanceCM(){
         start = clock();
         count++;
         if (count > 100) {
-            return -1;
+            return getDistanceCM();
         }
     }
 

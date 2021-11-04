@@ -47,6 +47,7 @@
 
 // Functions
 double getDistanceCM  ();
+double averageDistCM  ( int );
 void   initServo      ( int );
 void   look           ( int, int );
 void   stopServo      ( int );
