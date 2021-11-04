@@ -19,7 +19,7 @@ int lineScan() {
     int rightCenter = lineScanHelper(RIGHTCENTER);
     int right = lineScanHelper(RIGHT);
 
-    printf("[(%d) (%d) (%d) (%d)]", left, leftCenter, rightCenter, right);
+    printf("[(%d) (%d) (%d) (%d)]\n", left, leftCenter, rightCenter, right);
 
     return left + (leftCenter * 2) + (rightCenter * 4) + (right * 8);
 }
@@ -45,10 +45,12 @@ void stopServo(int servo) {
 }
 
 double averageDistCM(int measurements) {
+    double weight = 0.7;
     double dist = 0;
 
     for (int i = 0; i < measurements; i++) {
-        dist += getDistanceCM();
+        dist = (dist * weight) + (getDistanceCM() * (1 - weight)); // smooth results
+        usleep(500); //wait for sound waves to complete trip. Consider lowering this value later. Fow now it is working though
     }
 
     return dist/measurements;
@@ -57,9 +59,8 @@ double averageDistCM(int measurements) {
 double getDistanceCM(){
     setPin(ECHO, INPUT);
     setPin(TRIGGER, INPUT); // Confirm trigger is low before going high to ensure a clean sginal
-    usleep(5);
     setPin(TRIGGER, OUTPUT);
-    usleep(20);                     // wait 10 microseconds           
+    usleep(10);                     // wait 10 microseconds           
     setPin(TRIGGER, INPUT);
 
     int count = 0;
@@ -77,5 +78,5 @@ double getDistanceCM(){
         stop = clock();
     }
     double elapsedTime = (double)(stop - start) / CLOCKS_PER_SEC; 
-    return (double)(34000 * elapsedTime) / 2; // Derived from 2*S = V*T
+    return (double)(340000 * elapsedTime) / 2; // Derived from 2*S = V*T
 }
