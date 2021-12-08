@@ -3,9 +3,9 @@
 * Name:Lake Jasper
 * Student ID:920150605
 * Github ID:TheJaspinater
-* Project:
+* Project: Final Project
 *
-* File: gpioController.h
+* File: dma.h
 *
 * Description:
 **************************************************************/

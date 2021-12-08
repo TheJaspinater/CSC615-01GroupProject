@@ -3,11 +3,16 @@
 * Name:Lake Jasper
 * Student ID:920150605
 * Github ID:TheJaspinater
-* Project:
+* Project:  Assignment 1 - Traffic Light
 *
-* File: gpioController.c
+* File: assignment1b.c
 *
-* Description:
+* Description: assignment1b.c is used to hold all of the
+* functions needed to demonstrate the second part of assignment
+* 1. Since assignment one makes use of DMA it requires
+* more setup then part 1. As such, this file contains basic
+* functions to manually set up the memory mapping as well as
+* methods to enable and disable pins via the memory map.
 **************************************************************/
 #include "gpioController.h"
 

@@ -3,7 +3,7 @@
 * Name:Lake Jasper
 * Student ID:920150605
 * Github ID:TheJaspinater
-* Project:  
+* Project:  Assignment 2 - Tapeless Ruler
 *
 * File: sensors.c
 *
@@ -11,6 +11,67 @@
 **************************************************************/
 #include "sensors.h"
 #include "softPwm.h"
+
+static volatile int lineState;
+static volatile pthread_t scannerThread;
+static volatile int threadCheck = -1;
+static int threadController = 0;
+
+/*****************************
+ * multi threading
+ ****************************/
+
+static void * scanner ( void * args )
+{
+    threadCheck = -1;
+    while ( threadController != 1 )
+    {
+        lineState = lineScanHelper   ( LEFT        )
+                  + ( lineScanHelper ( LEFTCENTER  ) * 2 )
+                  + ( lineScanHelper ( RIGHTCENTER ) * 4 )
+                  + ( lineScanHelper ( RIGHT       ) * 8 );
+    }
+
+    return NULL ;
+}
+
+int getLineState ()
+{
+    return lineState;
+}
+
+int initLineScanner ()
+{
+    int res;
+    pthread_t newThread ;
+    
+    threadCheck = 1;
+    res = pthread_create (&newThread, NULL, scanner, NULL) ;
+    
+    if (res != 0)
+        return res ;
+
+    while ( threadCheck != -1 ) // thread not created, store scannerThread. threadcheck updated from within thread
+    {
+        usleep (1000) ;
+    }
+
+    scannerThread = newThread;
+
+    return res;
+}
+
+void stopLineScanner ()
+{
+    threadController = 1;
+    pthread_cancel ( scannerThread ) ;
+    pthread_join   ( scannerThread, NULL ) ;
+    lineState = 0;
+}
+
+/*****************************
+ * Prototyped / proof of concept
+ ****************************/
 
 int lineScan() {
 
@@ -44,23 +105,12 @@ void stopServo(int servo) {
     softPwmStop(servo);
 }
 
-double averageDistCM(int measurements) {
-    double weight = 0.7;
-    double dist = 0;
-
-    for (int i = 0; i < measurements; i++) {
-        dist = (dist * weight) + (getDistanceCM() * (1 - weight)); // smooth results
-        usleep(500); //wait for sound waves to complete trip. Consider lowering this value later. Fow now it is working though
-    }
-
-    return dist/measurements;
-}
-
 double getDistanceCM(){
     setPin(ECHO, INPUT);
     setPin(TRIGGER, INPUT); // Confirm trigger is low before going high to ensure a clean sginal
+    usleep(5);
     setPin(TRIGGER, OUTPUT);
-    usleep(10);                     // wait 10 microseconds           
+    usleep(20);                     // wait 10 microseconds           
     setPin(TRIGGER, INPUT);
 
     int count = 0;
@@ -78,5 +128,5 @@ double getDistanceCM(){
         stop = clock();
     }
     double elapsedTime = (double)(stop - start) / CLOCKS_PER_SEC; 
-    return (double)(340000 * elapsedTime) / 2; // Derived from 2*S = V*T
+    return (double)(34000 * elapsedTime) / 2; // Derived from 2*S = V*T
 }

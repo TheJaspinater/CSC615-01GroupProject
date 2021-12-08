@@ -3,7 +3,7 @@
 * Name:Lake Jasper
 * Student ID:920150605
 * Github ID:TheJaspinater
-* Project:
+* Project:  Assignment 2 - Tapeless Ruler
 *
 * File: sensors.h
 *
@@ -13,6 +13,7 @@
 #define SENSORS_H
 
 #include <time.h>
+#include <pthread.h>
 #include "gpioController.h"
 
 // Sates
@@ -46,8 +47,11 @@
 #define BLUELIGHT  24
 
 // Functions
+int  getLineState     ();
+int  initLineScanner  ();
+void stopLineScanner  ();
+
 double getDistanceCM  ();
-double averageDistCM  ( int );
 void   initServo      ( int );
 void   look           ( int, int );
 void   stopServo      ( int );
