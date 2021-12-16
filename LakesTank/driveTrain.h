@@ -19,7 +19,10 @@
 #define REVERSE 1
 #define ROTATELEFT 2
 #define ROTATERIGHT 3
-#define STOP 4
+#define TURNLEFT 4
+#define TURNRIGHT 5
+#define STOP 6
+#define CLOCKWISE 7
 
 #define LEFTMOTOR   16
 #define LEFTFORWARD 20

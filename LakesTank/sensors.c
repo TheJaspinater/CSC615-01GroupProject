@@ -14,17 +14,22 @@
 
 static volatile int lineState;
 static volatile pthread_t scannerThread;
-static volatile int threadCheck = -1;
-static int threadController = 0;
+static volatile int scannerThreadCheck = -1;
+static int scannerThreadController = 0;
+
+static volatile double distance;
+static volatile pthread_t distThread;
+static volatile int distThreadCheck = -1;
+static int distThreadController = 0;
 
 /*****************************
- * multi threading
+ * multi threading - Line Scanner
  ****************************/
 
 static void * scanner ( void * args )
 {
-    threadCheck = -1;
-    while ( threadController != 1 )
+    scannerThreadCheck = -1;
+    while ( scannerThreadController != 1 )
     {
         lineState = lineScanHelper   ( LEFT        )
                   + ( lineScanHelper ( LEFTCENTER  ) * 2 )
@@ -45,13 +50,13 @@ int initLineScanner ()
     int res;
     pthread_t newThread ;
     
-    threadCheck = 1;
+    scannerThreadCheck = 1;
     res = pthread_create (&newThread, NULL, scanner, NULL) ;
     
     if (res != 0)
         return res ;
 
-    while ( threadCheck != -1 ) // thread not created, store scannerThread. threadcheck updated from within thread
+    while ( scannerThreadCheck != -1 ) // thread not created, store scannerThread. threadcheck updated from within thread
     {
         usleep (1000) ;
     }
@@ -63,10 +68,68 @@ int initLineScanner ()
 
 void stopLineScanner ()
 {
-    threadController = 1;
+    scannerThreadController = 1;
     pthread_cancel ( scannerThread ) ;
     pthread_join   ( scannerThread, NULL ) ;
     lineState = 0;
+}
+
+/*****************************
+ * multi threading - Ultrasonic Sensor
+ ****************************/
+
+static void * rangeFinder ( void * args )
+{
+    distThreadCheck = -1;
+    int tempDist = 0 , iter = 10;
+
+    while ( distThreadController != 1 )
+    {
+        tempDist = 0;
+        for ( int i = 0; i < iter; i++ ) {
+            tempDist += getDistanceCM ();
+            usleep (10000) ;
+        }
+        distance = tempDist / iter;
+    }
+
+    return NULL ;
+}
+
+double getDist ()
+{
+    return distance;
+}
+
+int initRangeFinder ()
+{
+    initServo ( SSERVO );
+    
+    int res;
+    pthread_t newThread ;
+    
+    distThreadCheck = 1;
+    res = pthread_create ( &newThread, NULL, rangeFinder, NULL) ;
+    
+    if (res != 0)
+        return res ;
+
+    while ( distThreadCheck != -1 ) // thread not created, store scannerThread. threadcheck updated from within thread
+    {
+        usleep (1000) ;
+    }
+
+    distThread = newThread;
+
+    return res;
+}
+
+void stopRangeFinder ()
+{
+    distThreadController = 1;
+    pthread_cancel ( distThread ) ;
+    pthread_join   ( distThread, NULL ) ;
+    distance = 0;
 }
 
 /*****************************

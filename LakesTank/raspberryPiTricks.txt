@@ -1,0 +1,35 @@
+File Transfer: pc -> Raspberry Pi - - - - -
+ - open cmd at desired file locaiton
+	EX: scp driveTrain.c driveTrain.h softPwm.c softPwm.h sensors.c sensors.h gpioController.c gpioController.h main.c makefile pi@192.168.50.63:/home/pi/test
+
+SSH into Raspberry Pi
+ - ssh pi@192.168.x.x
+ - Home network: ssh pi@192.168.50.63
+ - Pswd: raspberry
+
+Reset Network connections - - - - -
+ - navigate to the boot directory of the pi board(must be direct access from sd card)
+ - creat file: wpa_supplicant.conf
+ - add the following:
+
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=US
+
+network={
+	ssid="<Name of your wireless LAN>"
+	psk="<Password for your wireless LAN>"
+}
+
+DAILY SETUP:
+ - cmd for file transfer using scp
+ - cmd for SSH
+ - VS Code
+
+GPIO commands
+ - gpio readall: display all gpio headers
+ - gpio mode wPiPin# in/out
+ - gpio write wPiPin# 1/0
+
+Board Details
+ - 1Ghz, Broadcom BCM 2835 single-core processor

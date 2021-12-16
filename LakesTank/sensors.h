@@ -29,11 +29,11 @@
 
 //Servos
 #define SSERVO   23 //Sonar Servo
-#define ANGLE0   24 
-#define ANGLE90  14
-#define ANGLE180 5
+#define ANGLE0   5 
+#define ANGLE90  13
+#define ANGLE180 24
 #define ANGLE45  9
-#define ANGLE135 18
+#define ANGLE135 19
 
 //4 Channel Line tracking
 #define LEFT        3
@@ -47,15 +47,19 @@
 #define BLUELIGHT  24
 
 // Functions
-int  getLineState     ();
-int  initLineScanner  ();
-void stopLineScanner  ();
+int    getLineState    ();
+int    initLineScanner ();
+void   stopLineScanner ();
 
-double getDistanceCM  ();
-void   initServo      ( int );
-void   look           ( int, int );
-void   stopServo      ( int );
-int    lineScan       ();
-int    lineScanHelper ( int );
+double getDist         ();
+int    initRangeFinder ();
+void   stopRangeFinder ();
+
+double getDistanceCM   ();
+void   initServo       ( int );
+void   look            ( int, int );
+void   stopServo       ( int );
+int    lineScan        ();
+int    lineScanHelper  ( int );
 
 #endif

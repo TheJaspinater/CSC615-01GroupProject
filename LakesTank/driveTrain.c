@@ -63,6 +63,22 @@ void steer(int direction, int speed) {
             softPwmWrite(LEFTMOTOR, speed);
             softPwmWrite(RIGHTMOTOR, speed);
             break;
+        case TURNLEFT:
+            setPin(LEFTREVERSE, INPUT);
+            setPin(RIGHTREVERSE, INPUT);
+            setPin(LEFTFORWARD, OUTPUT);
+            setPin(RIGHTFORWARD, OUTPUT);
+            softPwmWrite(LEFTMOTOR, speed/8);
+            softPwmWrite(RIGHTMOTOR, speed);
+            break;
+        case TURNRIGHT:
+            setPin(LEFTREVERSE, INPUT);
+            setPin(RIGHTREVERSE, INPUT);
+            setPin(LEFTFORWARD, OUTPUT);
+            setPin(RIGHTFORWARD, OUTPUT);
+            softPwmWrite(LEFTMOTOR, speed);
+            softPwmWrite(RIGHTMOTOR, speed/8);
+            break;
         case STOP:
             softPwmWrite(LEFTMOTOR, 0);
             softPwmWrite(RIGHTMOTOR, 0);
@@ -71,5 +87,13 @@ void steer(int direction, int speed) {
             setPin(RIGHTFORWARD, INPUT);
             setPin(RIGHTREVERSE, INPUT);
             break;
+        case CLOCKWISE:
+            setPin(LEFTREVERSE, INPUT);
+            setPin(RIGHTREVERSE, INPUT);
+            setPin(LEFTFORWARD, OUTPUT);
+            setPin(RIGHTFORWARD, OUTPUT);
+            softPwmWrite(LEFTMOTOR, speed);
+            softPwmWrite(RIGHTMOTOR, speed/3);
+
     }
 }
